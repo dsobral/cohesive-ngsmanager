@@ -11,7 +11,7 @@ def METHOD = 'fastp'
 def ENTRYPOINT = "step_${STEP}__${METHOD}"
 
 process fastp {
-    container "ghcr.io/genpat-it/fastp:0.23.1--e4ac3df4c5"
+    container "nanozoo/fastp:0.23.1--9f2e255"
     tag "${md?.cmp}/${md?.ds}/${md?.dt}"
     memory { taskMemory( 3.GB, task.attempt ) }
     time { taskTime( 10.m, task.attempt ) }
