@@ -48,7 +48,7 @@ process plasmid_spades {
 }
 
 process assembly_filter {
-    container "ghcr.io/genpat-it/python3:3.10.1--29cf21c1f1"
+    container "python:3.10.1"
     containerOptions = "-v ${workflow.projectDir}/scripts/${ENTRYPOINT}:/scripts:ro"
     memory { taskMemory( 3.GB, task.attempt ) }
     tag "${md?.cmp}/${md?.ds}/${md?.dt}"
