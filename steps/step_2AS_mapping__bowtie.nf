@@ -11,7 +11,7 @@ def METHOD = 'bowtie'
 def ENTRYPOINT = "step_${STEP}__${METHOD}"
 
 process bowtie2 {
-    container "ghcr.io/genpat-it/bowtie2:2.1.0--37ad014737"
+    container "biocontainers/bowtie2:2.2.9"
     tag "${md?.cmp}/${md?.ds}/${md?.dt}"
     memory { taskMemory( 1.GB, task.attempt ) }
     when:
@@ -45,7 +45,7 @@ process bowtie2 {
 }
 
 process samtools {
-    container "ghcr.io/genpat-it/samtools:0.1.19--f3869562fe"
+    container "staphb/samtools:1.19"
     tag "${md?.cmp}/${md?.ds}/${md?.dt}"
     memory { taskMemory( 6.GB, task.attempt ) }
         input:
@@ -73,7 +73,7 @@ process samtools {
 }
 
 process seqio {
-    container "ghcr.io/genpat-it/python3:3.10.1--29cf21c1f1"
+    container "python:3.10.1"
     tag "${md?.cmp}/${md?.ds}/${md?.dt}"
     memory { taskMemory( 250.MB, task.attempt ) }
     input:
@@ -125,7 +125,7 @@ process samtools_depth {
 }
 
 process coverage_minmax {
-    container "ghcr.io/genpat-it/samtools:0.1.19--f3869562fe"
+    container "staphb/samtools:1.19"
     containerOptions = "-v ${workflow.projectDir}/scripts/${ENTRYPOINT}:/scripts:ro"
     tag "${md?.cmp}/${md?.ds}/${md?.dt}"
     memory { taskMemory( 4.GB, task.attempt ) }
@@ -151,7 +151,7 @@ process coverage_minmax {
 }
 
 process coverage_check {
-    container "ghcr.io/genpat-it/python3:3.10.1--29cf21c1f1"
+    container "python:3.10.1"
     containerOptions = "-v ${workflow.projectDir}/scripts/${ENTRYPOINT}:/scripts:ro"
     tag "${md?.cmp}/${md?.ds}/${md?.dt}"
     memory { taskMemory( 200.MB, task.attempt ) }
