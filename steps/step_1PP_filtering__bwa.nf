@@ -33,12 +33,12 @@ process bwa {
       type = isIlluminaPaired(reads) ? 'paired' : 'single' 
       if (isIlluminaPaired(reads)) {
         """
-        bwa index -p ${reference} ${referencePath}
+        bwa index -p ${reference} ${referencePath} 2>> ${base_ref}.log
         bwa mem -t 8 ${reference} ${t1} ${t2} -o ${base_ref}.sam 2>> ${base_ref}.log
         """
       } else if (isIonTorrent(reads)) {
         """
-        bwa index -p ${reference} ${referencePath}
+        bwa index -p ${reference} ${referencePath} 2>> ${base_ref}.log
         bwa mem -t 8 ${reference} ${t1} -o ${base_ref}.sam 2>> ${base_ref}.log
         """      
       }     
