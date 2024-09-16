@@ -29,16 +29,16 @@ process bwa {
       (t1,t2) = (reads instanceof java.util.Collection) ? reads : [reads, null]
       md = parseMetadataFromFileName(t1.getName())
       base = "${md.ds}-${ex.dt}_${md.cmp}"
-      base_ref = "${base}_bowtie_${reference}" 
+      base_ref = "${base}_bwa_${reference}" 
       type = isIlluminaPaired(reads) ? 'paired' : 'single' 
       if (isIlluminaPaired(reads)) {
         """
-        bwa index ${reference}
+        bwa index -p ${reference} ${referencePath}
         bwa mem -t 8 ${reference} ${t1} ${t2} -o ${base_ref}.sam 2>> ${base_ref}.log
         """
       } else if (isIonTorrent(reads)) {
         """
-        bwa index ${reference}
+        bwa index -p ${reference} ${referencePath}
         bwa mem -t 8 ${reference} ${t1} -o ${base_ref}.sam 2>> ${base_ref}.log
         """      
       }     
