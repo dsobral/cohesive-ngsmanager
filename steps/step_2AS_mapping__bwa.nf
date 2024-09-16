@@ -33,13 +33,13 @@ process bwa {
       base_ref = "${base}_bwa_${reference}"
       if (isIlluminaPaired(reads)) {
         """
-        bwa index -p ${reference} ${referencePath}
-        bwa mem -t 8 ${reference} -1 ${t1} -2 ${t2} -o ${base_ref}.sam 2>> ${base_ref}.log
+        bwa index -p ${reference} ${referencePath} || return 0
+        bwa mem -t 8 ${reference} -1 ${t1} -2 ${t2} -o ${base_ref}.sam 2>> ${base_ref}.log  || return 0
         """
       } else if (isIonTorrent(reads)) {
         """
-        bwa index -p ${reference} ${referencePath} 
-        bwa mem -t 8 ${reference} -U ${t1} -o ${base_ref}.sam 2>> ${base_ref}.log
+        bwa index -p ${reference} ${referencePath}  || return 0
+        bwa mem -t 8 ${reference} -U ${t1} -o ${base_ref}.sam 2>> ${base_ref}.log  || return 0
         """      
       }      
 }
